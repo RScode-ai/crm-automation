@@ -57,6 +57,13 @@ public class LeadService {
 
         return leadRepository.save(lead);
     }
+    public void deleteLead(Long id) {
+
+        Lead lead = leadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Lead not found"));
+
+        leadRepository.delete(lead);
+    }
 
 
 }

@@ -37,6 +37,13 @@ public class LeadController {
 
         return leadService.updateLead(id, request);
     }
+    @DeleteMapping("/{id}")
+    public String deleteLead(@PathVariable Long id) {
+
+        leadService.deleteLead(id);
+
+        return "Lead deleted successfully";
+    }
 
 
 }
