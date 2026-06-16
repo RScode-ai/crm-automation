@@ -20,6 +20,11 @@ public class LeadService {
     public List<Lead> getAllLeads() {
         return leadRepository.findAll();
     }
+    public Lead getLeadById(Long id) {
+
+        return leadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Lead not found"));
+    }
 
 
 

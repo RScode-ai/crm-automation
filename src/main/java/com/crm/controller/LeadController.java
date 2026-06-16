@@ -25,4 +25,9 @@ public class LeadController {
     public List<Lead> getAllLeads() {
         return leadService.getAllLeads();
     }
+    @GetMapping("/{id}")
+    public Lead getLeadById(@PathVariable Long id) {
+
+        return leadService.getLeadById(id);
+    }
 }
