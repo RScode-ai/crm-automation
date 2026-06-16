@@ -1,6 +1,7 @@
 package com.crm.controller;
 
 import com.crm.dto.LeadRequest;
+import java.util.List;
 import com.crm.entity.Lead;
 import com.crm.service.LeadService;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,9 @@ public class LeadController {
     @PostMapping
     public Lead createLead(@RequestBody LeadRequest request) {
         return leadService.createLead(request);
+    }
+    @GetMapping
+    public List<Lead> getAllLeads() {
+        return leadService.getAllLeads();
     }
 }

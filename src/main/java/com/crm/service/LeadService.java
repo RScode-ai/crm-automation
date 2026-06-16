@@ -1,6 +1,7 @@
 package com.crm.service;
 
 import com.crm.dto.LeadRequest;
+import java.util.List;
 import com.crm.entity.Lead;
 import com.crm.entity.LeadStatus;
 import com.crm.repository.LeadRepository;
@@ -16,6 +17,11 @@ public class LeadService {
     public LeadService(LeadRepository leadRepository) {
         this.leadRepository = leadRepository;
     }
+    public List<Lead> getAllLeads() {
+        return leadRepository.findAll();
+    }
+
+
 
     public Lead createLead(LeadRequest request) {
 
