@@ -1,0 +1,35 @@
+package com.crm.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "leads")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Lead {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    private String email;
+
+    private String phone;
+
+    private String company;
+
+    @Enumerated(EnumType.STRING)
+    private LeadStatus status;
+
+    private String source;
+
+    private LocalDateTime createdAt;
+}
