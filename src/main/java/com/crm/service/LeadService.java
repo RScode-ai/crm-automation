@@ -1,6 +1,6 @@
 package com.crm.service;
 
-import com.crm.dto.LeadRequest;
+import com.crm.dto.*;
 import java.util.List;
 import com.crm.entity.Lead;
 import com.crm.entity.LeadStatus;
@@ -42,4 +42,21 @@ public class LeadService {
 
         return leadRepository.save(lead);
     }
+
+    public Lead updateLead(Long id, LeadUpdateRequest request) {
+
+        Lead lead = leadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Lead not found"));
+
+        lead.setName(request.getName());
+        lead.setEmail(request.getEmail());
+        lead.setPhone(request.getPhone());
+        lead.setCompany(request.getCompany());
+        lead.setSource(request.getSource());
+        lead.setStatus(request.getStatus());
+
+        return leadRepository.save(lead);
+    }
+
+
 }

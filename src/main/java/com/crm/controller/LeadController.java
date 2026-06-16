@@ -1,6 +1,6 @@
 package com.crm.controller;
 
-import com.crm.dto.LeadRequest;
+import com.crm.dto.*;
 import java.util.List;
 import com.crm.entity.Lead;
 import com.crm.service.LeadService;
@@ -30,4 +30,13 @@ public class LeadController {
 
         return leadService.getLeadById(id);
     }
+    @PutMapping("/{id}")
+    public Lead updateLead(
+            @PathVariable Long id,
+            @RequestBody LeadUpdateRequest request) {
+
+        return leadService.updateLead(id, request);
+    }
+
+
 }
