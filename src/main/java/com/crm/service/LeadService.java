@@ -3,6 +3,7 @@ package com.crm.service;
 import com.crm.dto.*;
 import java.util.List;
 import com.crm.entity.Lead;
+import com.crm.exception.*;
 import com.crm.entity.LeadStatus;
 import com.crm.repository.LeadRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class LeadService {
     public Lead getLeadById(Long id) {
 
         return leadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lead not found"));
+                .orElseThrow(() ->
+                        new LeadNotFoundException("Lead not found with id : " + id));
     }
 
 
@@ -46,7 +48,8 @@ public class LeadService {
     public Lead updateLead(Long id, LeadUpdateRequest request) {
 
         Lead lead = leadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lead not found"));
+                .orElseThrow(() ->
+                        new LeadNotFoundException("Lead not found with id : " + id));
 
         lead.setName(request.getName());
         lead.setEmail(request.getEmail());
@@ -60,7 +63,8 @@ public class LeadService {
     public void deleteLead(Long id) {
 
         Lead lead = leadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lead not found"));
+                .orElseThrow(() ->
+                        new LeadNotFoundException("Lead not found with id : " + id));
 
         leadRepository.delete(lead);
     }
