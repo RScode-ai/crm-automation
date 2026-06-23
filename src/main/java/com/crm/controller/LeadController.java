@@ -19,31 +19,66 @@ public class LeadController {
     }
 
     @PostMapping
-    public Lead createLead(@Valid  @RequestBody LeadRequest request) {
-        return leadService.createLead(request);
-    }
-    @GetMapping
-    public List<Lead> getAllLeads() {
-        return leadService.getAllLeads();
-    }
-    @GetMapping("/{id}")
-    public Lead getLeadById(@PathVariable Long id) {
+    public ApiResponse<Lead> createLead(
+            @Valid @RequestBody LeadRequest request) {
 
-        return leadService.getLeadById(id);
+        Lead lead = leadService.createLead(request);
+
+        return new ApiResponse<>(
+                true,
+                "Lead Created Successfully",
+                lead
+        );
     }
+
+
+    @GetMapping
+    public ApiResponse<List<Lead>> getAllLeads() {
+
+        return new ApiResponse<>(
+                true,
+                "Leads Fetched Successfully",
+                leadService.getAllLeads()
+        );
+    }
+
+
+    @GetMapping("/{id}")
+    public ApiResponse<Lead> getLeadById(
+            @PathVariable Long id) {
+
+        return new ApiResponse<>(
+                true,
+                "Lead Found",
+                leadService.getLeadById(id)
+        );
+    }
+
     @PutMapping("/{id}")
-    public Lead updateLead(
+    public ApiResponse<Lead> updateLead(
             @PathVariable Long id,
             @RequestBody LeadUpdateRequest request) {
 
-        return leadService.updateLead(id, request);
+        return new ApiResponse<>(
+                true,
+                "Lead Updated Successfully",
+                leadService.updateLead(id, request)
+        );
     }
+
+
+
     @DeleteMapping("/{id}")
-    public String deleteLead(@PathVariable Long id) {
+    public ApiResponse<String> deleteLead(
+            @PathVariable Long id) {
 
         leadService.deleteLead(id);
 
-        return "Lead deleted successfully";
+        return new ApiResponse<>(
+                true,
+                "Lead Deleted Successfully",
+                null
+        );
     }
 
 
