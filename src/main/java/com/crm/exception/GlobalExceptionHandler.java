@@ -34,4 +34,13 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(ContactNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleContactNotFound(
+            ContactNotFoundException ex) {
+
+        ApiErrorResponse error =
+                new ApiErrorResponse(ex.getMessage(), 404);
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

@@ -2,6 +2,8 @@ package com.crm.service;
 
 import com.crm.dto.ContactRequest;
 import com.crm.entity.Contact;
+import java.util.List;
+import com.crm.exception.ContactNotFoundException;
 import com.crm.repository.ContactRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,16 @@ public class ContactService {
                 .build();
 
         return contactRepository.save(contact);
+    }
+    public List<Contact> getAllContacts() {
+        return contactRepository.findAll();
+    }
+
+    public Contact getContactById(Long id) {
+
+        return contactRepository.findById(id)
+                .orElseThrow(() ->
+                        new ContactNotFoundException(
+                                "Contact not found with id : " + id));
     }
 }

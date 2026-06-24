@@ -3,6 +3,7 @@ package com.crm.controller;
 import com.crm.dto.ApiResponse;
 import com.crm.dto.ContactRequest;
 import com.crm.entity.Contact;
+import java.util.List;
 import com.crm.service.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,26 @@ public class ContactController {
                 true,
                 "Contact Created Successfully",
                 contact
+        );
+    }
+    @GetMapping
+    public ApiResponse<List<Contact>> getAllContacts() {
+
+        return new ApiResponse<>(
+                true,
+                "Contacts Fetched Successfully",
+                contactService.getAllContacts()
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<Contact> getContactById(
+            @PathVariable Long id) {
+
+        return new ApiResponse<>(
+                true,
+                "Contact Found",
+                contactService.getContactById(id)
         );
     }
 }
