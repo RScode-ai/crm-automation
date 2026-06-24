@@ -2,6 +2,7 @@ package com.crm.controller;
 
 import com.crm.dto.ApiResponse;
 import com.crm.dto.ContactRequest;
+import com.crm.dto.ContactUpdateRequest;
 import com.crm.entity.Contact;
 import java.util.List;
 import com.crm.service.ContactService;
@@ -48,6 +49,38 @@ public class ContactController {
                 true,
                 "Contact Found",
                 contactService.getContactById(id)
+        );
+    }
+
+
+    @PutMapping("/{id}")
+    public ApiResponse<Contact> updateContact(
+            @PathVariable Long id,
+            @Valid @RequestBody ContactUpdateRequest request) {
+
+        return new ApiResponse<>(
+                true,
+                "Contact Updated Successfully",
+                contactService.updateContact(id, request)
+        );
+
+
+
+
+
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<String> deleteContact(
+            @PathVariable Long id) {
+
+        contactService.deleteContact(id);
+
+        return new ApiResponse<>(
+                true,
+                "Contact Deleted Successfully",
+                null
         );
     }
 }

@@ -1,6 +1,7 @@
 package com.crm.service;
 
 import com.crm.dto.ContactRequest;
+import com.crm.dto.ContactUpdateRequest;
 import com.crm.entity.Contact;
 import java.util.List;
 import com.crm.exception.ContactNotFoundException;
@@ -42,5 +43,34 @@ public class ContactService {
                 .orElseThrow(() ->
                         new ContactNotFoundException(
                                 "Contact not found with id : " + id));
+    }
+
+    public Contact updateContact(
+            Long id,
+            ContactUpdateRequest request) {
+
+        Contact contact = contactRepository.findById(id)
+                .orElseThrow(() ->
+                        new ContactNotFoundException(
+                                "Contact not found with id : " + id));
+
+        contact.setName(request.getName());
+        contact.setEmail(request.getEmail());
+        contact.setPhone(request.getPhone());
+        contact.setCompany(request.getCompany());
+        contact.setDesignation(request.getDesignation());
+        contact.setAddress(request.getAddress());
+
+        return contactRepository.save(contact);
+    }
+
+    public void deleteContact(Long id) {
+
+        Contact contact = contactRepository.findById(id)
+                .orElseThrow(() ->
+                        new ContactNotFoundException(
+                                "Contact not found with id : " + id));
+
+        contactRepository.delete(contact);
     }
 }
