@@ -16,16 +16,19 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final JwtService jwtService;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(
             UserRepository userRepository,
-            BCryptPasswordEncoder passwordEncoder) {
+            BCryptPasswordEncoder passwordEncoder,
+            JwtService jwtService) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
-
     public User registerUser(
             UserRequest request) {
 
@@ -70,7 +73,10 @@ public class UserService {
                     "Invalid Password");
         }
 
-        return new LoginResponse(
-                "Login Successful");
+        String token =
+                jwtService.generateToken(
+                        user.getEmail());
+
+        return new LoginResponse(token);
     }
 }
