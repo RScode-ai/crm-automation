@@ -1,0 +1,86 @@
+package com.crm.security;
+
+import com.crm.service.JwtService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.Collections;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import java.util.List;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+@Component
+public class JwtFilter extends OncePerRequestFilter {
+
+    private final JwtService jwtService;
+
+    public JwtFilter(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String authHeader =
+                request.getHeader("Authorization");
+
+        if (authHeader != null &&
+                authHeader.startsWith("Bearer ")) {
+
+            String token =
+                    authHeader.substring(7);
+
+            System.out.println("Token Received: " + token);
+            System.out.println("Is Valid: " + jwtService.validateToken(token));
+
+            if (!jwtService.validateToken(token)) {
+
+                response.setStatus(
+                        HttpServletResponse.SC_UNAUTHORIZED);
+
+                return;
+            }
+
+            String email = jwtService.extractEmail(token);
+            String role =
+                    jwtService.extractRole(token);
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            email,
+                            null,
+                            List.of(
+                                    new SimpleGrantedAuthority(
+                                            "ROLE_" + role
+                                    )
+                            )
+                    );
+
+            SecurityContextHolder.getContext()
+                    .setAuthentication(authentication);
+        }
+
+        filterChain.doFilter(
+                request,
+                response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+
+        String path = request.getServletPath();
+
+        return path.equals("/api/users/login")
+                || path.equals("/api/users/register");
+    }
+}
