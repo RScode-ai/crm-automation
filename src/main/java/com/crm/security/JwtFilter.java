@@ -14,6 +14,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
+
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -29,8 +31,11 @@ public class JwtFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("JWT FILTER EXECUTED");
 
         System.out.println("REQUEST PATH = " + request.getServletPath());
+
+
 
         String authHeader = request.getHeader("Authorization");
 
