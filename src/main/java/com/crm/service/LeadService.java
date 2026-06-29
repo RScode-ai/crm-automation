@@ -3,9 +3,11 @@ package com.crm.service;
 import com.crm.dto.*;
 import java.util.List;
 import com.crm.entity.Lead;
+import com.crm.entity.User;
 import com.crm.exception.*;
 import com.crm.entity.LeadStatus;
 import com.crm.repository.LeadRepository;
+import com.crm.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,8 +17,11 @@ public class LeadService {
 
     private final LeadRepository leadRepository;
 
-    public LeadService(LeadRepository leadRepository) {
+    private final UserRepository userRepository;
+
+    public LeadService(LeadRepository leadRepository, UserRepository userRepository) {
         this.leadRepository = leadRepository;
+        this.userRepository = userRepository;
     }
     public List<Lead> getAllLeads() {
         return leadRepository.findAll();
@@ -68,6 +73,39 @@ public class LeadService {
 
         leadRepository.delete(lead);
     }
+
+
+    public Lead assignLead(
+            Long leadId,
+            Long salesUserId) {
+
+        Lead lead = leadRepository
+                .findById(leadId)
+                .orElseThrow();
+
+        User user = userRepository
+                .findById(salesUserId)
+                .orElseThrow();
+
+        lead.setAssignedTo(user);
+
+        return leadRepository.save(lead);
+    }
+
+    public Lead updateStatus(
+            Long leadId,
+            LeadStatus status){
+
+        Lead lead = leadRepository
+                .findById(leadId)
+                .orElseThrow();
+
+        lead.setStatus(status);
+
+        return leadRepository.save(lead);
+    }
+
+
 
 
 }

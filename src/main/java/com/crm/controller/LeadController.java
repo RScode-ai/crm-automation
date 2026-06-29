@@ -81,5 +81,36 @@ public class LeadController {
         );
     }
 
+    @PutMapping("/assign")
+    public ApiResponse<Lead> assignLead(
+            @RequestBody
+            LeadAssignmentRequest request){
+
+        return new ApiResponse<>(
+                true,
+                "Lead Assigned Successfully",
+                leadService.assignLead(
+                        request.getLeadId(),
+                        request.getSalesUserId()
+                )
+        );
+    }
+
+
+    @PutMapping("/status")
+    public ApiResponse<Lead> updateStatus(
+            @RequestBody
+            LeadStatusUpdateRequest request){
+
+        return new ApiResponse<>(
+                true,
+                "Lead Status Updated",
+                leadService.updateStatus(
+                        request.getLeadId(),
+                        request.getStatus()
+                )
+        );
+    }
+
 
 }

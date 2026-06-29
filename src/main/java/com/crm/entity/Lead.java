@@ -26,6 +26,10 @@ public class Lead {
 
     private String company;
 
+    @ManyToOne
+    @JoinColumn(name = "assigned_to")
+    private User assignedTo;
+
     @Enumerated(EnumType.STRING)
     private LeadStatus status;
 

@@ -50,12 +50,17 @@ public class JwtService {
                     .build()
                     .parseSignedClaims(token);
 
+            System.out.println("TOKEN VALID");
+
             return true;
 
         } catch (Exception e) {
 
+            e.printStackTrace();
+
             return false;
         }
+
     }
 
     public String extractRole(String token) {
