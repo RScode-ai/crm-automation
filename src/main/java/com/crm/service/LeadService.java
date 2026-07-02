@@ -19,9 +19,12 @@ public class LeadService {
 
     private final UserRepository userRepository;
 
-    public LeadService(LeadRepository leadRepository, UserRepository userRepository) {
+    private final LeadActivityService leadActivityService;
+
+    public LeadService(LeadRepository leadRepository, UserRepository userRepository , LeadActivityService leadActivityService) {
         this.leadRepository = leadRepository;
         this.userRepository = userRepository;
+        this.leadActivityService = leadActivityService;
     }
     public List<Lead> getAllLeads() {
         return leadRepository.findAll();
@@ -47,7 +50,17 @@ public class LeadService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        return leadRepository.save(lead);
+        Lead savedLead =
+                leadRepository.save(lead);
+
+        leadActivityService.logActivity(
+                savedLead,
+                "Lead Created"
+        );
+
+        return savedLead;
+
+
     }
 
     public Lead updateLead(Long id, LeadUpdateRequest request) {
@@ -89,20 +102,39 @@ public class LeadService {
 
         lead.setAssignedTo(user);
 
-        return leadRepository.save(lead);
+        Lead updatedLead = leadRepository.save(lead);
+
+        leadActivityService.logActivity(
+                updatedLead,
+                "Assigned To : " + user.getName()
+        );
+
+        return updatedLead;
     }
 
     public Lead updateStatus(
             Long leadId,
-            LeadStatus status){
+            LeadStatus status) {
 
         Lead lead = leadRepository
                 .findById(leadId)
                 .orElseThrow();
 
+        LeadStatus oldStatus = lead.getStatus();
+
         lead.setStatus(status);
 
-        return leadRepository.save(lead);
+        Lead updatedLead = leadRepository.save(lead);
+
+        leadActivityService.logActivity(
+                updatedLead,
+                "Status Changed : "
+                        + oldStatus
+                        + " -> "
+                        + status
+        );
+
+        return updatedLead;
     }
 
 

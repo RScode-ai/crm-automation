@@ -1,6 +1,7 @@
 package com.crm.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -36,4 +37,16 @@ public class Lead {
     private String source;
 
     private LocalDateTime createdAt;
+
+    @OneToMany(
+            mappedBy = "lead",
+            cascade = CascadeType.ALL
+    )
+    private List<LeadActivity> activities;
+
+    @OneToMany(
+            mappedBy = "lead",
+            cascade = CascadeType.ALL
+    )
+    private java.util.List<LeadNote> notes;
 }

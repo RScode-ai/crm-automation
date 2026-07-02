@@ -41,6 +41,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/tasks/**")
                         .hasAnyRole("ADMIN","MANAGER","SALES")
 
+                        .requestMatchers("/api/lead-notes/**")
+                        .hasAnyRole("ADMIN","MANAGER","SALES")
+
                         .requestMatchers("/api/leads/**")
                         .hasAnyRole("ADMIN","MANAGER","SALES")
 
