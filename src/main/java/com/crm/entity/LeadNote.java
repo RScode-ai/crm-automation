@@ -2,6 +2,7 @@ package com.crm.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 
@@ -24,5 +25,6 @@ public class LeadNote {
 
     @ManyToOne
     @JoinColumn(name = "lead_id")
+    @JsonIgnore
     private Lead lead;
 }

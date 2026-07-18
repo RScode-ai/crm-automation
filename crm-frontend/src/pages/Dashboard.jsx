@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import StatsCard from "../components/dashboard/StatsCard";
 import { getDashboardStats } from "../services/dashboardService";
+import RecentLeads from "../components/dashboard/RecentLeads";
+import RecentTasks from "../components/dashboard/RecentTasks";
 
 function Dashboard() {
 
@@ -26,32 +28,41 @@ function Dashboard() {
 
     return (
         <>
-            <h1>Dashboard</h1>
+            <h1 className="dashboard-title">
+                Dashboard
+            </h1>
 
-            <StatsCard
-                title="Total Leads"
-                value={stats.totalLeads}
-            />
+            <div className="stats-grid">
+                 <RecentLeads/>
 
-            <StatsCard
-                title="Total Contacts"
-                value={stats.totalContacts}
-            />
+                 <RecentTasks/>
 
-            <StatsCard
-                title="Total Tasks"
-                value={stats.totalTasks}
-            />
+                <StatsCard
+                    title="Total Leads"
+                    value={stats.totalLeads}
+                />
 
-            <StatsCard
-                title="Pending Tasks"
-                value={stats.pendingTasks}
-            />
+                <StatsCard
+                    title="Total Contacts"
+                    value={stats.totalContacts}
+                />
 
-            <StatsCard
-                title="Completed Tasks"
-                value={stats.completedTasks}
-            />
+                <StatsCard
+                    title="Total Tasks"
+                    value={stats.totalTasks}
+                />
+
+                <StatsCard
+                    title="Pending Tasks"
+                    value={stats.pendingTasks}
+                />
+
+                <StatsCard
+                    title="Completed Tasks"
+                    value={stats.completedTasks}
+                />
+
+            </div>
         </>
     );
 }

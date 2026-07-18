@@ -3,6 +3,7 @@ package com.crm.entity;
 import jakarta.persistence.*;
 import java.util.List;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 
@@ -38,15 +39,17 @@ public class Lead {
 
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "lead",
             cascade = CascadeType.ALL
     )
     private List<LeadActivity> activities;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "lead",
             cascade = CascadeType.ALL
     )
-    private java.util.List<LeadNote> notes;
+    private List<LeadNote> notes;
 }
