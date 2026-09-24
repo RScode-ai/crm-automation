@@ -4,10 +4,11 @@ import com.crm.dto.ApiResponse;
 import com.crm.dto.ContactRequest;
 import com.crm.dto.ContactUpdateRequest;
 import com.crm.entity.Contact;
-import java.util.List;
 import com.crm.service.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/contacts")
@@ -19,6 +20,7 @@ public class ContactController {
         this.contactService = contactService;
     }
 
+    // Create Contact
     @PostMapping
     public ApiResponse<Contact> createContact(
             @Valid @RequestBody ContactRequest request) {
@@ -31,6 +33,8 @@ public class ContactController {
                 contact
         );
     }
+
+    // Get All Contacts
     @GetMapping
     public ApiResponse<List<Contact>> getAllContacts() {
 
@@ -41,6 +45,7 @@ public class ContactController {
         );
     }
 
+    // Get Contact By Id
     @GetMapping("/{id}")
     public ApiResponse<Contact> getContactById(
             @PathVariable Long id) {
@@ -52,7 +57,7 @@ public class ContactController {
         );
     }
 
-
+    // Update Contact
     @PutMapping("/{id}")
     public ApiResponse<Contact> updateContact(
             @PathVariable Long id,
@@ -63,14 +68,9 @@ public class ContactController {
                 "Contact Updated Successfully",
                 contactService.updateContact(id, request)
         );
-
-
-
-
-
     }
 
-
+    // Delete Contact
     @DeleteMapping("/{id}")
     public ApiResponse<String> deleteContact(
             @PathVariable Long id) {

@@ -1,84 +1,68 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import "../../assets/css/modal.css";
 
-function AddLeadModal({ lead, onClose, onLeadAdded }) {
+function AddContactModal({ contact, onClose, onContactAdded }) {
 
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         phone: "",
         company: "",
-        source: "",
-        status: "NEW"
+        designation: "",
+        address: ""
     });
 
-    // Edit mode
     useEffect(() => {
 
-        if (lead) {
+        if (contact) {
 
             setFormData({
-
-                name: lead.name || "",
-                email: lead.email || "",
-                phone: lead.phone || "",
-                company: lead.company || "",
-                source: lead.source || "",
-                status: lead.status || "NEW"
-
+                name: contact.name || "",
+                email: contact.email || "",
+                phone: contact.phone || "",
+                company: contact.company || "",
+                designation: contact.designation || "",
+                address: contact.address || ""
             });
 
         }
 
-    }, [lead]);
+    }, [contact]);
 
     const handleChange = (e) => {
 
         setFormData({
-
             ...formData,
             [e.target.name]: e.target.value
-
         });
 
     };
 
-    const saveLead = async () => {
+    const saveContact = async () => {
 
         try {
 
-            if (lead) {
-
-                // EDIT
+            if (contact) {
 
                 await api.put(
-
-                    `/leads/${lead.id}`,
-
+                    `/contacts/${contact.id}`,
                     formData
-
                 );
 
-                alert("Lead Updated Successfully");
+                alert("Contact Updated Successfully");
 
             } else {
 
-                // ADD
-
                 await api.post(
-
-                    "/leads",
-
+                    "/contacts",
                     formData
-
                 );
 
-                alert("Lead Added Successfully");
+                alert("Contact Added Successfully");
 
             }
 
-            await onLeadAdded();
+            await onContactAdded();
 
             onClose();
 
@@ -100,7 +84,11 @@ function AddLeadModal({ lead, onClose, onLeadAdded }) {
 
                 <h2>
 
-                    {lead ? "Edit Lead" : "Add New Lead"}
+                    {
+                        contact
+                            ? "Edit Contact"
+                            : "Add Contact"
+                    }
 
                 </h2>
 
@@ -133,19 +121,29 @@ function AddLeadModal({ lead, onClose, onLeadAdded }) {
                 />
 
                 <input
-                    name="source"
-                    placeholder="Source"
-                    value={formData.source}
+                    name="designation"
+                    placeholder="Designation"
+                    value={formData.designation}
                     onChange={handleChange}
                 />
+
+                <textarea
+                    name="address"
+                    placeholder="Address"
+                    rows="3"
+                    value={formData.address}
+                    onChange={handleChange}
+                />
+
+                <br />
 
                 <div className="modal-buttons">
 
                     <button
                         className="save-btn"
-                        onClick={saveLead}
+                        onClick={saveContact}
                     >
-                        {lead?.id ? "Update Lead" : "Save Lead"}
+                        {contact ? "Update Contact" : "Save Contact"}
                     </button>
 
                     <button
@@ -165,4 +163,4 @@ function AddLeadModal({ lead, onClose, onLeadAdded }) {
 
 }
 
-export default AddLeadModal;
+export default AddContactModal;

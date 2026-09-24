@@ -3,6 +3,7 @@ package com.crm.service;
 import com.crm.dto.LoginRequest;
 import com.crm.dto.LoginResponse;
 import com.crm.dto.UserRequest;
+import com.crm.dto.UserUpdateRequest;
 import com.crm.entity.User;
 import com.crm.exception.UserAlreadyExistsException;
 import com.crm.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -80,5 +82,48 @@ public class UserService {
                 );
 
         return new LoginResponse(token);
+    }
+
+
+    public List<User> getAllUsers() {
+
+        return userRepository.findAll();
+
+    }
+
+    public User getUserById(Long id) {
+
+        return userRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("User Not Found"));
+
+    }
+
+    public User updateUser(
+            Long id,
+            UserUpdateRequest request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("User Not Found"));
+
+        user.setName(request.getName());
+
+        user.setEmail(request.getEmail());
+
+        user.setRole(request.getRole());
+
+        return userRepository.save(user);
+
+    }
+
+    public void deleteUser(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("User Not Found"));
+
+        userRepository.delete(user);
+
     }
 }

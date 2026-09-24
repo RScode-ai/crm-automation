@@ -1,0 +1,126 @@
+/* ===========================
+   TASK MODAL
+=========================== */
+
+.modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content{
+    width:650px;
+    max-width:90%;
+    background:#fff;
+    border-radius:18px;
+    padding:35px;
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        transform:scale(.9);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.modal-content h2{
+    margin-bottom:25px;
+    color:#1e293b;
+    font-size:34px;
+    font-weight:700;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select{
+    width:100%;
+    padding:14px 18px;
+    border:1px solid #d9d9d9;
+    border-radius:12px;
+    font-size:15px;
+    margin-bottom:18px;
+    outline:none;
+    transition:.25s;
+    box-sizing:border-box;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
+
+.modal-content textarea{
+    resize:none;
+    min-height:110px;
+}
+
+/* Priority + Status */
+
+.select-row{
+    display:flex;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.select-row select{
+    flex:1;
+    margin-bottom:0;
+}
+
+/* Date */
+
+.modal-content input[type="datetime-local"]{
+    margin-bottom:25px;
+}
+
+/* Buttons */
+
+.modal-buttons{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+}
+
+.save-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:13px 28px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+.cancel-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:13px 28px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.cancel-btn:hover{
+    background:#dc2626;
+}

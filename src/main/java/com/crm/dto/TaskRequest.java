@@ -1,6 +1,7 @@
 package com.crm.dto;
 
 import com.crm.entity.TaskPriority;
+import com.crm.entity.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class TaskRequest {
     private String description;
 
     private TaskPriority priority;
+
+    private TaskStatus status;
 
     private LocalDateTime dueDate;
 }

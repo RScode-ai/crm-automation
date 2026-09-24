@@ -26,7 +26,14 @@ public class TaskService {
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .priority(request.getPriority())
-                .status(TaskStatus.PENDING)
+
+                // Default PENDING only if status is not sent
+                .status(
+                        request.getStatus() != null
+                                ? request.getStatus()
+                                : TaskStatus.PENDING
+                )
+
                 .dueDate(request.getDueDate())
                 .createdAt(LocalDateTime.now())
                 .build();
