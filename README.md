@@ -119,6 +119,4 @@ npm run dev
 - The backend is already structured for JWT-based authentication and role-based authorization.
 - The project appears to be in an active development stage and is set up as an IntelliJ-friendly workspace with `.idea` configuration files present.
 
-## Suggested Next Step
 
-The next logical step is to review the backend entities, security configuration, and frontend route flow before implementing or expanding functionality.
